@@ -2,9 +2,8 @@ import "./App.css";
 import ImgixClient from "@imgix/js-core";
 import { useEffect, useRef, useState } from "react";
 import Input from "./Components/Input/Input";
-import Collapser from "./Components/Collapser/Collapser";
+import Button from "./Components/Button/Button";
 
-// TODO: Crear estos inputs para que a medida que el usuario agregue propiedades con sus valores se vayan agregando al objeto.
 // TODO: El objeto creado debe ser guardado en un estado para poder tener el estado previo y de esa forma tener forma del hacer el undo.
 
 const client = new ImgixClient({
@@ -96,17 +95,16 @@ function App() {
   return (
     <>
       <div className="App">
-        <div className="w-4/5 h-screen rounded-lg shadow-lg flex justify-center items-center">
+        <div className="w-4/5 h-screen rounded-lg shadow-lg flex justify-center items-center overflow-hidden">
           {fullURL === "" || fullURL.includes("Select") ? (
-            <p>Select image</p>
+            <p>Select mage</p>
           ) : (
             <img src={fullURL} alt={imageUrl} />
           )}
         </div>
         <div className="bg-gray-600 w-2/6 h-screen rounded-lg shadow-lg flex justify-center items-center flex-col overflow-auto">
           <div className="flex justify-center flex-col">
-            <Collapser />
-            <p className="text-2xl font-bold m-1">Select image</p>
+            <p className="text-2xl font-bold m-4">Image</p>
 
             <select
               onChange={selectedImageHandler}
@@ -136,6 +134,11 @@ function App() {
                 />
               );
             })}
+
+            <div className="m-4">
+              <Button label={"Backward"} svg={"backward"} />
+              <Button label={"Forward"} svg={"forward"} />
+            </div>
           </div>
         </div>
       </div>
