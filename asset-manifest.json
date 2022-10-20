@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/fran-challenge/static/css/main.16dee45b.css",
+    "main.js": "/fran-challenge/static/js/main.9fbd641d.js",
+    "index.html": "/fran-challenge/index.html",
+    "main.16dee45b.css.map": "/fran-challenge/static/css/main.16dee45b.css.map",
+    "main.9fbd641d.js.map": "/fran-challenge/static/js/main.9fbd641d.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.16dee45b.css",
+    "static/js/main.9fbd641d.js"
+  ]
+}
