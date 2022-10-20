@@ -34,7 +34,7 @@ function App() {
   const flipRef = useRef();
   const selectedImageRef = useRef();
 
-  const [images, setImages] = useState([]);
+  const [images, setImages] = useState(["Select image"]);
   const [params, setParams] = useState({});
   const [imageUrl, setImageUrl] = useState("");
   const [fullURL, setFullURL] = useState("");
@@ -53,21 +53,23 @@ function App() {
       );
       const data = await response.json();
       const urlImages = data.map((element) => element.url.slice(25));
-      setImages(urlImages);
+      // setImages(urlImages);
+      setImages(images.concat(urlImages));
     })();
   }, []);
 
   useEffect(() => {
     if (!imageUrl) return;
 
-    console.log(fullURL);
     setFullURL(urlCreator(imageUrl, params));
-    console.log("URL CHANGE");
   }, [imageUrl, params]);
 
   const selectedImageHandler = () => {
     const selectedImage = selectedImageRef.current.value;
     setImageUrl(selectedImage);
+    // setImages((prevState) => {
+    //   return [...prevState].shift();
+    // });
   };
 
   const inputHandler = (paramName) => {
@@ -80,18 +82,17 @@ function App() {
     setParams((prevState) => {
       return { ...prevState, flip: inputValue };
     });
-
-    // setFullURL(urlCreator(imageUrl, params));
-    // console.log(flipRef.current.value);
-    // console.log("name", name);
-    // setFullURL(urlCreator(imageURL, params));
   };
 
   return (
     <>
       <div className="App">
         <div className="w-4/5 h-screen rounded-lg shadow-lg flex justify-center items-center">
-          {fullURL === "" ? <p>Select image</p> : <img src={fullURL} />}
+          {fullURL === "" || fullURL.includes("Select") ? (
+            <p>Select image</p>
+          ) : (
+            <img src={fullURL} alt={imageUrl} />
+          )}
         </div>
         <div className="bg-gray-600 w-2/6 h-screen rounded-lg shadow-lg flex justify-center items-center flex-col">
           <div className="flex justify-center items-center flex-col">
@@ -116,6 +117,9 @@ function App() {
             />
           </div>
         </div>
+      </div>
+      <div className="bg-gray-600 dark:text-white flex justify-center items-center flex-col">
+        {fullURL}
       </div>
     </>
   );
