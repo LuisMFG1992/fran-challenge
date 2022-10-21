@@ -16,6 +16,7 @@ const urlCreator = (imageUrl, paramsObj) => {
 };
 
 function App() {
+  const testRef = useRef();
   const flipRef = useRef();
   const orientationRef = useRef();
   const rotationRef = useRef();
@@ -33,6 +34,7 @@ function App() {
         "https://storage.googleapis.com/nanlabs-engineering-technical-interviews/imgix-samples-list.json"
       );
       const data = await response.json();
+      console.log(data);
       const urlImages = data.map((element) => element.url.slice(25));
       setImages((prevState) => prevState.concat(urlImages));
     })();
@@ -68,20 +70,18 @@ function App() {
     }
   };
 
-  const inputsConfiguration = [
+  const rotationInputsOptions = [
     {
       ref: flipRef,
       name: "Flip Axis",
       id: "flip",
       options: ["", "h", "v", "hv"],
-      // placeholder: "",
     },
     {
       ref: orientationRef,
       name: "Orientation",
       id: "orient",
       options: ["", 1, 2, 3, 4, 5, 6, 7, 8, 90, 180, 270],
-      // placeholder: "",
     },
     {
       ref: rotationRef,
@@ -89,6 +89,75 @@ function App() {
       id: "rot",
       options: [0, 359],
       placeholder: "From 0 to 359",
+    },
+  ];
+
+  const adjustmentInputsOptions = [
+    // options and placeholder van hardcodeados pq todos van de -100 a 100 y 0 es el default
+    {
+      ref: "",
+      name: "Brightness",
+      id: "bri",
+    },
+    {
+      ref: "",
+      name: "Contrast",
+      id: "con",
+    },
+    {
+      ref: "",
+      name: "Exposure",
+      id: "exp",
+    },
+    {
+      ref: "",
+      name: "Gamma",
+      id: "gam",
+    },
+    {
+      ref: "",
+      name: "Highlight",
+      id: "high",
+    },
+    {
+      ref: "",
+      name: "Hue Shift",
+      id: "hue",
+    },
+    {
+      ref: "",
+      name: "Invert",
+      id: "invert",
+    },
+    {
+      ref: "",
+      name: "Saturation",
+      id: "sat",
+    },
+    {
+      ref: "",
+      name: "Shadow",
+      id: "shad",
+    },
+    {
+      ref: "",
+      name: "Sharpen",
+      id: "sharp",
+    },
+    {
+      ref: "",
+      name: "Unsharp Mask",
+      id: "usm",
+    },
+    {
+      ref: "",
+      name: "Unsharp Mask Radius",
+      id: "usmrad",
+    },
+    {
+      ref: "",
+      name: "Vibrance ",
+      id: "vib",
     },
   ];
 
@@ -102,14 +171,14 @@ function App() {
             <img src={fullURL} alt={imageUrl} />
           )}
         </div>
-        <div className="bg-gray-600 w-2/6 h-screen rounded-lg shadow-lg flex justify-center items-center flex-col overflow-auto">
-          <div className="flex justify-center flex-col">
-            <p className="text-2xl font-bold m-4">Image</p>
+        <div className="overflow-scroll bg-gray-600 w-2/6 h-screen rounded-lg shadow-lg flex items-center flex-col overflow-auto">
+          <div className="flex justify-start flex-col">
+            <p className="text-2xl font-bold m-1">Image</p>
 
             <select
               onChange={selectedImageHandler}
               ref={selectedImageRef}
-              className="text-center bg-gray-50 border border-gray-300 mb-8 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              className="text-center bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             >
               {images.map((element, index) => (
                 // TODO: Usar un mejor valor para las key
@@ -119,9 +188,9 @@ function App() {
               ))}
             </select>
 
-            <p className="text-2xl font-bold">Rotation</p>
+            <p className="text-2xl font-bold m-1 mt-8">Rotation</p>
 
-            {inputsConfiguration.map((input) => {
+            {rotationInputsOptions.map((input) => {
               return (
                 <Input
                   key={input.id}
@@ -135,6 +204,20 @@ function App() {
               );
             })}
 
+            <p className="text-2xl font-bold m-1 mt-8">Adjustment</p>
+
+            {adjustmentInputsOptions.map((input) => {
+              return (
+                <Input
+                  key={input.id}
+                  refe={testRef}
+                  name={input.name}
+                  paramsHandler={paramsHandler}
+                  id={input.id}
+                />
+              );
+            })}
+
             <div className="m-4">
               <Button label={"Backward"} svg={"backward"} />
               <Button label={"Forward"} svg={"forward"} />
@@ -144,9 +227,6 @@ function App() {
       </div>
       <div className="bg-gray-600 dark:text-white flex justify-center items-center flex-col">
         {fullURL}
-      </div>
-      <div className="bg-gray-600 dark:text-white flex justify-center items-center flex-col">
-        {JSON.stringify(params)}
       </div>
     </>
   );
