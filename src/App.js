@@ -22,8 +22,9 @@ function App() {
   const [params, setParams] = useState({});
   const [imageUrl, setImageUrl] = useState("");
   const [fullURL, setFullURL] = useState("");
+  const [history, setHistory] = useState([]);
 
-  // Trae todas las imagenes
+  // Fetch all images
   useEffect(() => {
     (async function imageHandler() {
       const response = await fetch(
@@ -39,6 +40,10 @@ function App() {
     if (!imageUrl) return;
 
     setFullURL(urlCreator(imageUrl, params));
+
+    let historyParamsObj = { imageUrl, params };
+
+    setHistory([...history, historyParamsObj]);
   }, [imageUrl, params]);
 
   const selectedImageHandler = () => {
@@ -150,6 +155,10 @@ function App() {
 
   return (
     <>
+      <div className="bg-gray-600 dark:text-white flex justify-center items-center flex-col">
+        {fullURL}
+      </div>
+
       <div className="App">
         <div className="w-4/5 h-screen rounded-lg shadow-lg flex justify-center items-center overflow-hidden">
           {fullURL === "" || fullURL.includes("Select") ? (
@@ -168,7 +177,6 @@ function App() {
               className="text-center bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             >
               {images.map((element, index) => (
-                // TODO: Usar un mejor valor para las key
                 <option key={index} value={element}>
                   {element}
                 </option>
@@ -209,9 +217,6 @@ function App() {
             </div>
           </div>
         </div>
-      </div>
-      <div className="bg-gray-600 dark:text-white flex justify-center items-center flex-col">
-        {fullURL}
       </div>
     </>
   );

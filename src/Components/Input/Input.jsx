@@ -1,10 +1,8 @@
 const Input = ({ name, paramsHandler = "", id, options = [], placeholder }) => {
-  let paramValue = "";
-
-  if (paramValue) {
-  }
-
   let inputType = "";
+  let inputValue;
+
+  //TODO: Usar el debouce para que el input number no me tome el valor con cada tecla
 
   if (options.length <= 2) {
     const min = options[0];
@@ -18,8 +16,9 @@ const Input = ({ name, paramsHandler = "", id, options = [], placeholder }) => {
         min={min ? min : "-100"}
         max={max ? max : "100"}
         placeholder={placeholder ? placeholder : " From -100 to 100"}
-        onBlur={(e) => {
-          const inputValue = e.target.value;
+        //TODO: Hacer debounce para que no me cree un objeto con cada numero que escribo
+        onChange={(e) => {
+          inputValue = e.target.value;
           paramsHandler(id, inputValue);
         }}
       />
@@ -30,7 +29,7 @@ const Input = ({ name, paramsHandler = "", id, options = [], placeholder }) => {
         id={id}
         className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-white-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 text-center"
         onChange={(e) => {
-          const inputValue = e.target.value;
+          inputValue = e.target.value;
           paramsHandler(id, inputValue);
         }}
       >
