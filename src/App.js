@@ -16,10 +16,6 @@ const urlCreator = (imageUrl, paramsObj) => {
 };
 
 function App() {
-  const testRef = useRef();
-  const flipRef = useRef();
-  const orientationRef = useRef();
-  const rotationRef = useRef();
   const selectedImageRef = useRef();
 
   const [images, setImages] = useState(["Select image"]);
@@ -34,7 +30,6 @@ function App() {
         "https://storage.googleapis.com/nanlabs-engineering-technical-interviews/imgix-samples-list.json"
       );
       const data = await response.json();
-      console.log(data);
       const urlImages = data.map((element) => element.url.slice(25));
       setImages((prevState) => prevState.concat(urlImages));
     })();
@@ -51,40 +46,32 @@ function App() {
     setImageUrl(selectedImage);
   };
 
-  const paramsHandler = (refe) => {
-    const inputValue = refe.current.value;
-    const inputId = refe.current.id;
-
-    console.log({ inputValue });
-
-    if (!inputValue) {
+  const paramsHandler = (id, value) => {
+    if (!value) {
       setParams((current) => {
         const copy = { ...current };
-        delete copy[inputId];
+        delete copy[id];
         return copy;
       });
     } else {
       setParams((prevState) => {
-        return { ...prevState, [inputId]: inputValue };
+        return { ...prevState, [id]: value };
       });
     }
   };
 
   const rotationInputsOptions = [
     {
-      ref: flipRef,
       name: "Flip Axis",
       id: "flip",
       options: ["", "h", "v", "hv"],
     },
     {
-      ref: orientationRef,
       name: "Orientation",
       id: "orient",
       options: ["", 1, 2, 3, 4, 5, 6, 7, 8, 90, 180, 270],
     },
     {
-      ref: rotationRef,
       name: "Rotation",
       id: "rot",
       options: [0, 359],
@@ -194,7 +181,6 @@ function App() {
               return (
                 <Input
                   key={input.id}
-                  refe={input.ref}
                   name={input.name}
                   paramsHandler={paramsHandler}
                   id={input.id}
@@ -210,7 +196,6 @@ function App() {
               return (
                 <Input
                   key={input.id}
-                  refe={testRef}
                   name={input.name}
                   paramsHandler={paramsHandler}
                   id={input.id}
