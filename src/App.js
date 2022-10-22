@@ -3,6 +3,7 @@ import ImgixClient from "@imgix/js-core";
 import { useEffect, useRef, useState } from "react";
 import Input from "./Components/Input/Input";
 import Button from "./Components/Button/Button";
+import ShowUrl from "./Components/ShowUrl/ShowUrl";
 
 // TODO: El objeto creado debe ser guardado en un estado para poder tener el estado previo y de esa forma tener forma del hacer el undo.
 
@@ -18,11 +19,11 @@ const urlCreator = (imageUrl, paramsObj) => {
 function App() {
   const selectedImageRef = useRef();
 
-  const [images, setImages] = useState(["Select image"]);
+  const [images, setImages] = useState(["Select an image"]);
   const [params, setParams] = useState({});
   const [imageUrl, setImageUrl] = useState("");
   const [fullURL, setFullURL] = useState("");
-  const [history, setHistory] = useState([]);
+  // const [history, setHistory] = useState([]);
 
   // Fetch all images
   useEffect(() => {
@@ -41,9 +42,9 @@ function App() {
 
     setFullURL(urlCreator(imageUrl, params));
 
-    let historyParamsObj = { imageUrl, params };
+    // let historyParamsObj = { imageUrl, params };
 
-    setHistory([...history, historyParamsObj]);
+    // setHistory([...history, historyParamsObj]);
   }, [imageUrl, params]);
 
   const selectedImageHandler = () => {
@@ -69,12 +70,12 @@ function App() {
     {
       name: "Flip Axis",
       id: "flip",
-      options: ["", "h", "v", "hv"],
+      options: ["Select an option", "h", "v", "hv"],
     },
     {
       name: "Orientation",
       id: "orient",
-      options: ["", 1, 2, 3, 4, 5, 6, 7, 8, 90, 180, 270],
+      options: ["Select an option", 1, 2, 3, 4, 5, 6, 7, 8, 90, 180, 270],
     },
     {
       name: "Rotation",
@@ -155,26 +156,24 @@ function App() {
 
   return (
     <>
-      <div className="bg-gray-600 dark:text-white flex justify-center items-center flex-col">
-        {fullURL}
-      </div>
+      <ShowUrl fullURL={fullURL} imageUrl={imageUrl} />
 
       <div className="App">
         <div className="w-4/5 h-screen rounded-lg shadow-lg flex justify-center items-center overflow-hidden">
           {fullURL === "" || fullURL.includes("Select") ? (
-            <p>Select mage</p>
+            <p className="text-2xl font-bold m-1 mt-8">Select an image</p>
           ) : (
             <img src={fullURL} alt={imageUrl} />
           )}
         </div>
-        <div className="overflow-scroll bg-gray-600 w-2/6 h-screen rounded-lg shadow-lg flex items-center flex-col overflow-auto">
+        <div className="overflow-scroll bg-gray-700 w-2/6 h-screen rounded-lg shadow-lg flex items-center flex-col overflow-auto">
           <div className="flex justify-start flex-col">
             <p className="text-2xl font-bold m-1">Image</p>
 
             <select
               onChange={selectedImageHandler}
               ref={selectedImageRef}
-              className="text-center bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              className="text-center bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-900 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             >
               {images.map((element, index) => (
                 <option key={index} value={element}>
