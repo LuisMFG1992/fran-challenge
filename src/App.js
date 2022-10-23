@@ -4,15 +4,13 @@ import { useEffect, useRef, useState } from "react";
 import ShowUrl from "./Components/ShowUrl/ShowUrl";
 import ImageDisplay from "./Components/ImageDisplay/ImageDisplay";
 import InputsFields from "./Components/InputsFields/InputsFields";
-import MultipleImage from "./Components/MultipleImage/MultipleImage";
-import Accordion from "./Components/Accordion/Accordion";
 
 const client = new ImgixClient({
   domain: "assets.imgix.net",
   secureURLToken: "",
 });
 
-const urlCreator = (imageUrl, paramsObj) => {
+const urlCreator = async (imageUrl, paramsObj) => {
   return client.buildURL(imageUrl, paramsObj);
 };
 
@@ -39,8 +37,8 @@ function App() {
 
   useEffect(() => {
     if (!imageUrl) return;
-
     setFullURL(urlCreator(imageUrl, params));
+    console.log({ fullURL });
 
     let historyObj = { imageUrl, params };
 
@@ -87,7 +85,6 @@ function App() {
           urlCreator={urlCreator}
         />
       </div>
-      {/* <Accordion /> */}
     </div>
   );
 }

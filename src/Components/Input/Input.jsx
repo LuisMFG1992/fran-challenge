@@ -1,12 +1,11 @@
 const Input = ({ name, paramsHandler = "", id, options = [], placeholder }) => {
-  const debounce = (cb, delay = 1000) => {
+  const debounce = (func, timeout = 1000) => {
     let timer;
-
-    return (...arg) => {
+    return (...args) => {
       clearTimeout(timer);
       timer = setTimeout(() => {
-        cb(...arg);
-      }, delay);
+        func.apply(this, args);
+      }, timeout);
     };
   };
 
@@ -28,7 +27,7 @@ const Input = ({ name, paramsHandler = "", id, options = [], placeholder }) => {
         //TODO: Hacer debounce para que no me cree un objeto con cada numero que escribo
         onChange={(e) => {
           inputValue = e.target.value;
-          paramsHandler(id, inputValue);
+          debounce(paramsHandler(id, inputValue, 5000));
         }}
       />
     );
