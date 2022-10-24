@@ -1,0 +1,11 @@
+.containerApp {
+  text-align: center;
+  min-height: 90vh;
+  display: flex;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.bg-app {
+  background: #282c34;
+}
