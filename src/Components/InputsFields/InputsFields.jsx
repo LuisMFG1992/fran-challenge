@@ -98,7 +98,7 @@ const InputsField = ({
   paramsHandler,
 }) => {
   return (
-    <div className="overflow-scroll bg-gray-700 w-1/4 h-inputFields rounded-lg shadow-lg flex items-center flex-col overflow-hidden">
+    <div className="overflow-scroll bg-gray-700 min-width-table h-inputFields rounded-lg shadow-lg flex items-center flex-col overflow-hidden">
       <div className="flex justify-start flex-col pt-8">
         <p className="text-xl font-bold m-1 text-center">IMAGE</p>
 
