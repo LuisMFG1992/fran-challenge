@@ -4,8 +4,6 @@ import { useEffect, useRef, useState } from "react";
 import ShowUrl from "./Components/ShowUrl/ShowUrl";
 import ImageDisplay from "./Components/ImageDisplay/ImageDisplay";
 import InputsFields from "./Components/InputsFields/InputsFields";
-import MultipleImage from "./Components/MultipleImage/MultipleImage";
-import Accordion from "./Components/Accordion/Accordion";
 
 const client = new ImgixClient({
   domain: "assets.imgix.net",
@@ -37,6 +35,7 @@ function App() {
     })();
   }, []);
 
+  // Create URL with image and params
   useEffect(() => {
     if (!imageUrl) return;
 
@@ -46,7 +45,7 @@ function App() {
 
     console.log({ historyObj });
 
-    setHistory([...history, historyObj]);
+    setHistory((prevState) => [...prevState, historyObj]);
   }, [imageUrl, params]);
 
   const selectedImageHandler = () => {
@@ -56,8 +55,8 @@ function App() {
 
   const paramsHandler = (id, value) => {
     if (!value) {
-      setParams((current) => {
-        const copy = { ...current };
+      setParams((prevState) => {
+        const copy = { ...prevState };
         delete copy[id];
         return copy;
       });
@@ -87,7 +86,6 @@ function App() {
           urlCreator={urlCreator}
         />
       </div>
-      {/* <Accordion /> */}
     </div>
   );
 }

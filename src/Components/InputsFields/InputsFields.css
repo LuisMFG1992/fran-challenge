@@ -1,3 +1,7 @@
 .h-inputFields {
   height: 88vh;
 }
+
+.min-width-table {
+  min-width: 250px;
+}

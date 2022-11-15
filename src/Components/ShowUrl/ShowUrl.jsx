@@ -5,7 +5,7 @@ const ShowUrl = (props) => {
 
   return (
     <div className="flex pt-2 pl-2 pr-2">
-      <span className=" inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 rounded-l-md border border-r-0 border-gray-300 dark:bg-gray-900 dark:text-white dark:border-gray-600">
+      <span className="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 rounded-l-md border border-r-0 border-gray-300 dark:bg-gray-900 dark:text-white dark:border-gray-600">
         URL
       </span>
       <div
